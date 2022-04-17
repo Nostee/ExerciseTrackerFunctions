@@ -35,5 +35,5 @@ module.exports = generate;
 
 // This file accepts numberOfActions and numberOfSamplePerActions.
 // genData(<numberOfActions>,<numberOfSamplePerActions>)
-// numberOfActions: The number of gestures/actoins to be trained.
+// numberOfActions: The number of gestures/actions to be trained.
 // numberOfSamplePerActions: The number of samples per actions to be trained.

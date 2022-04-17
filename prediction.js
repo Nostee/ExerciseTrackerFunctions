@@ -1,9 +1,8 @@
-function start(currentLiveData)
-{
+function start(currentLiveData,currentActions){
     const tf = require('@tensorflow/tfjs');
     require('@tensorflow/tfjs-node');
-
-    const gestureClasses = ['Zero','One','Two','Three','Four','Five'];
+    
+    const gestureClasses = currentActions;
     var model;
     var _liveData;
     const init = async (liveData) => {
@@ -13,7 +12,7 @@ function start(currentLiveData)
     }
     const predict = (model => {
         tf.tidy(()=>{
-            const input = tf.tensor2d(_liveData,[1,6]);
+            const input = tf.tensor2d(_liveData,[1,currentLiveData.length]);
             const prediction = model.predict(input);
             const gesturePredicted = gestureClasses[prediction.argMax(-1).dataSync()[0]];
             console.log(gesturePredicted);
@@ -44,11 +43,12 @@ module.exports = start;
 
 // SAMPLE USAGE in other file:
 // const startPredict = require(__dirname+"/prediction.js");
-// startPredict(currentLiveData)
+// startPredict(currentLiveData,currentActions)
 
 // This file accepts currentLiveData.
-// genData(<currentLiveData>)
+// genData(<currentLiveData>,<currentActions>)
 // currentLiveData: This is an array of the live data.
+// currentActions: This is an array of the current actions available.
 
 
 
