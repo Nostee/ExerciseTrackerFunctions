@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^3.14.0",
+    "tiny-worker": "^2.3.0"
+  }
+}
