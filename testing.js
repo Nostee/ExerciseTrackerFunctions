@@ -30,7 +30,8 @@ function predictData(){
 
     // This file accepts currentLiveData.
     // genData(<currentLiveData>,<currentActions>)
-    // currentLiveData: This is an array.
+    // currentLiveData: This is an array of the live data.
+    // currentActions: This is an array of the current actions.
 }
 
 // createDummyData();
