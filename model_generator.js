@@ -1,7 +1,7 @@
-function generate(numOfLabels,_epochs,_splitter){
+function generate(numOfLabels){
     var fs = require('fs');
     const { features } = require('process');
-
+    
     // Count Number of Files
     var folderName = "./data";
     var numFiles = fs.readdirSync(folderName, (err, files) => {withFileTypes: true});
@@ -19,8 +19,8 @@ function generate(numOfLabels,_epochs,_splitter){
 
     // Variables that Depend on Number of Gestures
     var numOfLabels = numOfLabels;
-    var _epochs = _epochs;
-    var _splitter = _splitter;
+    var _epochs = (numOfLabels,((numOfLabels-2)*30))+10;
+    var _splitter = 0.1;
 
     var _labels = [];
     var _features = [];
@@ -107,10 +107,8 @@ module.exports = generate;
 
 // SAMPLE USAGE in other file:
 // const genMod = require(__dirname+"/model_generator.js");
-// genMod(6,80,0.1)
+// genMod(6)
 
 // This file accepts numOfLabels,_epochs and _splitter.
-// genMod(<Number of Gestures>,<Number of Epochs>,<Splitter Multiplier>)
+// genMod(<Number of Gestures>)
 // Number of Gestures: It is the number of actions to be trained.
-// Number of Epochs: I'm not really sure about this but usually this is around 40 to 80. So experiment on the value.
-// Spliiter Mutlipler: I'm not really sure about this but usually this is around 0.1 to 0.2. So experiment on the value.

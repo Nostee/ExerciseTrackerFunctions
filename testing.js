@@ -1,8 +1,13 @@
-// ---- CREATION OF DUMMY DATA ---- \\
-function createDummyData(){
-    const genData = require(__dirname+"/file_generator.js");
-    genData(6,4)
+let currentActions =  ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight'];
+let numberOfActions = currentActions.length;
 
+// ---- CREATION OF DUMMY DATA ---- \\
+async function createDummyData(){
+    const genData = require(__dirname+"/file_generator.js");
+    const delData = require(__dirname+"/delete_data.js");
+    await delData();
+    genData(numberOfActions,4);
+    
     // This file accepts numberOfActions and numberOfSamplePerActions.
     // genData(<numberOfActions>,<numberOfSamplePerActions>)
     // Number of numberOfActions: The number of gestures/actoins to be trained.
@@ -12,7 +17,7 @@ function createDummyData(){
 // ---- CREATION OF MODEL ---- \\
 function createModel(){
     const genMod = require(__dirname+"/model_generator.js");
-    genMod(6,80,0.1);
+    genMod(numberOfActions);
 
     // genMod(<Number of Gestures>,<Number of Epochs>,<Splitter Multiplier>)
     // Number of Gestures: It is the number of actions to be trained.
@@ -23,9 +28,8 @@ function createModel(){
 // ---- PREDICTION ---- \\
 function predictData(){
     const startPredict = require(__dirname+"/prediction.js");
-    let num = 5;
+    let num = 8;
     let currentLiveData = [num,num,num,num,num,num];
-    let currentActions =  ['Zero','One','Two','Three','Four','Five'];
     startPredict(currentLiveData,currentActions);
 
     // This file accepts currentLiveData.
@@ -37,3 +41,4 @@ function predictData(){
 // createDummyData();
 // createModel();
 predictData();
+

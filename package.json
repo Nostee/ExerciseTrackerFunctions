@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@tensorflow/tfjs-node": "^3.14.0",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
     "tiny-worker": "^2.3.0"
   }
 }
