@@ -1,17 +1,12 @@
 const date = require(__dirname + "/get_current_date.js");
 const fs = require("fs");
-
-// DUMMY DATA
 let currentDate = date();
-let nameOfExercise = "push-up";
-let counter = 5;
 
-// GET DATA
 async function getData() {
   var myPromise = new Promise((resolve) => {
     let dataContainer = [];
     const csv = require("csv-parser");
-    fs.createReadStream("out.csv")
+    fs.createReadStream("../user_data/exercise.csv")
       .pipe(csv())
       .on("data", (row) => {
         dataContainer.push(row);
@@ -25,32 +20,66 @@ async function getData() {
   return data;
 }
 
-// WRITE DATA
-async function writeData() {
+async function writeExerciseData(exercise,counter) {
   let data = await getData();
   const createCsvWriter = require("csv-writer").createObjectCsvWriter;
   const csvWriter = createCsvWriter({
-    path: "out.csv",
+    path: "../user_data/exercise.csv",
     header: [
-      { id: "name", title: "name" },
-      { id: "surname", title: "surname" },
-      { id: "age", title: "age" },
-      { id: "gender", title: "gender" },
+      { id: "date", title: "date" },
+      { id: "exercise", title: "exercise" },
+      { id: "counter", title: "counter" },
     ],
   });
 
-  data.push({
-    name: "Johny",
-    surname: "Snowy",
-    age: "23",
-    gender: "M",
-  });
+  let exists = 0;
+  data.forEach((value)=>{
+    if(value['date']==currentDate){
+      if(value['exercise']==exercise){
+        exists = 1;
+        let newCount = parseInt(value['counter'])+counter;
+        value['counter'] = newCount;
+      }
+    }
+  })
 
-  console.log(data);
-
+  if(exists==0){
+    data.push({
+      date: currentDate,
+      exercise: exercise,
+      counter: counter,
+    });
+  }
+  
   csvWriter
     .writeRecords(data)
     .then(() => console.log("The CSV file was written successfully"));
 }
 
-writeData();
+async function writePostureData(time_start,time_end,verdict) {
+  let data = await getData();
+  const createCsvWriter = require("csv-writer").createObjectCsvWriter;
+  const csvWriter = createCsvWriter({
+    path: "../user_data/posture.csv",
+    header: [
+      { id: "date", title: "date" },
+      { id: "time_start", title: "time_start" },
+      { id: "time_end", title: "time_end" },
+      { id: "verdict", title: "verdict" },
+    ],
+  });
+
+  data.push({
+    date: currentDate,
+    time_start: time_start,
+    time_end: time_end,
+    verdict: verdict,
+  });
+  
+  csvWriter
+    .writeRecords(data)
+    .then(() => console.log("The CSV file was written successfully"));
+}
+
+writeExerciseData("Exercise",5);
+// writePostureData("12:00 AM","12:30 AM","Good");
