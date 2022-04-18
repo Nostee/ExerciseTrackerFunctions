@@ -1,4 +1,4 @@
-let currentActions =  ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight'];
+let currentActions = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight'];
 let numberOfActions = currentActions.length;
 
 // ---- CREATION OF DUMMY DATA ---- \\
@@ -41,4 +41,5 @@ function predictData(){
 // createDummyData();
 // createModel();
 predictData();
+
 

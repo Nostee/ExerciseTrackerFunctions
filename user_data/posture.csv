@@ -1,1 +1,4 @@
 date,time_start,time_end,verdict
+3-18-2022,12:00 AM,12:30 AM,Good
+3-19-2022,12:31 AM,12:32 AM,Bad
+3-19-2022,12:33 AM,12:34 AM,Good

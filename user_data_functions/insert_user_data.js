@@ -1,8 +1,8 @@
 const date = require(__dirname + "/get_current_date.js");
 const fs = require("fs");
-let currentDate = date();
+let currentDate = "3-19-2022";
 
-async function getData() {
+async function getExerciseData() {
   var myPromise = new Promise((resolve) => {
     let dataContainer = [];
     const csv = require("csv-parser");
@@ -20,8 +20,26 @@ async function getData() {
   return data;
 }
 
+async function getPostureData() {
+  var myPromise = new Promise((resolve) => {
+    let dataContainer = [];
+    const csv = require("csv-parser");
+    fs.createReadStream("../user_data/posture.csv")
+      .pipe(csv())
+      .on("data", (row) => {
+        dataContainer.push(row);
+      })
+      .on("end", () => {
+        console.log("CSV file successfully processed");
+        resolve(dataContainer);
+      });
+  });
+  let data = await myPromise;
+  return data;
+}
+
 async function writeExerciseData(exercise,counter) {
-  let data = await getData();
+  let data = await getExerciseData();
   const createCsvWriter = require("csv-writer").createObjectCsvWriter;
   const csvWriter = createCsvWriter({
     path: "../user_data/exercise.csv",
@@ -57,7 +75,7 @@ async function writeExerciseData(exercise,counter) {
 }
 
 async function writePostureData(time_start,time_end,verdict) {
-  let data = await getData();
+  let data = await getPostureData();
   const createCsvWriter = require("csv-writer").createObjectCsvWriter;
   const csvWriter = createCsvWriter({
     path: "../user_data/posture.csv",
@@ -81,5 +99,5 @@ async function writePostureData(time_start,time_end,verdict) {
     .then(() => console.log("The CSV file was written successfully"));
 }
 
-writeExerciseData("Exercise",5);
-// writePostureData("12:00 AM","12:30 AM","Good");
+exports.writeExerciseData = writeExerciseData;
+exports.writePostureData = writePostureData;

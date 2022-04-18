@@ -19,8 +19,8 @@ function generate(numOfLabels){
 
     // Variables that Depend on Number of Gestures
     var numOfLabels = numOfLabels;
-    var _epochs = (numOfLabels,((numOfLabels-2)*30))+10;
-    var _splitter = 0.1;
+    var _epochs = (numOfLabels,((numOfLabels-2)*30))+((numOfLabels-2)*20);
+    var _splitter = 0.01;
 
     var _labels = [];
     var _features = [];
